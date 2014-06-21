@@ -6,4 +6,12 @@ class window.App extends Backbone.Model
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
 
-  
+    (@get 'playerHand').on 'bust', =>
+      alert "Bust!"
+
+    (@get 'playerHand').on 'stand', =>
+      (@get 'dealerHand').models[0].flip()
+      (@get 'dealerHand').dealerPlay();
+
+    (@get 'dealerHand').on 'gameEnd', =>
+      alert "Game has ended"

@@ -5,22 +5,34 @@ class window.Hand extends Backbone.Collection
   initialize: (array, @deck, @isDealer) ->
 
   hit: ->
-    if @isDealer
-      console.log "is dealer"
-      while do @scores < 17 
-        console.log "score > 17"
-        @add(@deck.pop()).last()
-        if do @scores > 21
-          console.log "score > 21"
-          alert "You win!"
-    else
-      @add(@deck.pop()).last()
-      if do @scores > 21
-        alert "You lose!"
+    @add(@deck.pop()).last()
+    @calculateScore()
 
   stand: ->
     alert "Dealer's Turn"
+    @trigger('stand', @)
+
+  calculateScore: ->
+    if (do @scores).length == 2
+      if (do @scores)[0] > 21 && (do @scores)[1] > 21
+        @trigger('bust', @)    
+    else
+      if (do @scores)[0] > 21
+        @trigger('bust', @)
+
+  dealerPlay: =>
+    if (do @scores).length == 2
+      while (do @scores)[0] < 17 && (do @scores)[1] < 17
+        @add(@deck.pop()).last()
+    else
+      while (do @scores)[0] < 17
+        @add(@deck.pop()).last()
+        
+    @trigger('gameEnded', @)
+
     
+
+
 
 
 
