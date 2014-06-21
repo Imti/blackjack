@@ -6,6 +6,7 @@ class window.App extends Backbone.Model
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
 
+
     (@get 'playerHand').on 'bust', =>
       alert "Bust!"
 
@@ -15,3 +16,11 @@ class window.App extends Backbone.Model
 
     (@get 'dealerHand').on 'gameEnd', =>
       alert "Game has ended"
+      playerScore = (@get 'playerHand').scores()[0]
+      dealerScore = (@get 'dealerHand').scores()[0]
+      if dealerScore > 21 
+        alert "You win"
+      else
+        if playerScore > dealerScore then alert "You win!"
+        if playerScore < dealerScore then alert "You lose!"
+        if playerScore == dealerScore then alert "Draw!"

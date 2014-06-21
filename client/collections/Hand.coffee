@@ -8,11 +8,12 @@ class window.Hand extends Backbone.Collection
     @add(@deck.pop()).last()
     @calculateScore()
 
-  stand: ->
+  stand: =>
+    @playerScore = (do @scores)[0]
     alert "Dealer's Turn"
     @trigger('stand', @)
 
-  calculateScore: ->
+  calculateScore: =>
     if (do @scores).length == 2
       if (do @scores)[0] > 21 && (do @scores)[1] > 21
         @trigger('bust', @)    
@@ -27,10 +28,16 @@ class window.Hand extends Backbone.Collection
     else
       while (do @scores)[0] < 17
         @add(@deck.pop()).last()
-        
-    @trigger('gameEnded', @)
+    @dealerScore = (do @scores)[0]
+    @trigger('gameEnd', @)
 
-    
+  announceWinner: ->
+    console.log @dealerScore
+    console.log @playerScore
+    if @dealerScore > @playerScore
+      alert "You Lose"
+    else
+      alert "You Win"
 
 
 
