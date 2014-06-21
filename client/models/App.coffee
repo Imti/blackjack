@@ -15,10 +15,11 @@ class window.App extends Backbone.Model
       (@get 'dealerHand').dealerPlay();
 
     (@get 'dealerHand').on 'gameEnd', =>
-      alert "Game has ended"
-      playerScore = (@get 'playerHand').scores()[0]
-      dealerScore = (@get 'dealerHand').scores()[0]
-      if dealerScore > 21 
+      playerScore = (@get 'playerHand').endScore()
+      dealerScore = (@get 'dealerHand').endScore()
+      console.log playerScore
+      console.log dealerScore
+      if dealerScore > 21
         alert "You win"
       else
         if playerScore > dealerScore then alert "You win!"

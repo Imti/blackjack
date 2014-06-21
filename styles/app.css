@@ -4,7 +4,9 @@
   width: 100px;
   border-radius: 5px;
   height: 140px;
-  margin-right: 20px;
+  margin: 10px;
+  text-align: center;
+
 }
 
 .covered {
@@ -14,3 +16,4 @@
 .hand {
   overflow: auto;
 }
+

@@ -4,41 +4,63 @@ class window.Hand extends Backbone.Collection
 
   initialize: (array, @deck, @isDealer) ->
 
-  hit: ->
-    @add(@deck.pop()).last()
-    @calculateScore()
+  hit: =>
+      @add(@deck.pop()).last()
+      @calculateScore()
 
   stand: =>
-    @playerScore = (do @scores)[0]
-    alert "Dealer's Turn"
-    @trigger('stand', @)
+      @playerScore = (do @scores)[0]
+      alert "Dealer's Turn"
+      @trigger('stand', @)
 
   calculateScore: =>
     if (do @scores).length == 2
+
       if (do @scores)[0] > 21 && (do @scores)[1] > 21
         @trigger('bust', @)    
+
     else
+
       if (do @scores)[0] > 21
         @trigger('bust', @)
 
   dealerPlay: =>
     if (do @scores).length == 2
-      while (do @scores)[0] < 17 && (do @scores)[1] < 17
+
+      while (do @scores)[0] < 17 || (do @scores)[1] < 17
         @add(@deck.pop()).last()
+
     else
+
       while (do @scores)[0] < 17
         @add(@deck.pop()).last()
+
     @dealerScore = (do @scores)[0]
     @trigger('gameEnd', @)
 
-  announceWinner: ->
-    console.log @dealerScore
-    console.log @playerScore
-    if @dealerScore > @playerScore
-      alert "You Lose"
-    else
-      alert "You Win"
+  endScore: =>
+    @finalScore = 0
 
+    if (do @scores).length == 1
+      @finalScore = (do @scores)[0]
+
+    else if (do @scores).length == 2
+
+      if (do @scores)[0] > 22
+        if (do @scores)[1] > 22
+          @finalScore = (do @scores)[0]
+        else
+          @finalScore = (do @scores)[1]
+
+      else 
+
+        if (do @scores)[1] < 22 and (do @scores)[1] > (do @scores)[0]
+          @finalScore = (do @scores)[1]
+
+        else
+          @finalScore = (do @scores)[0]
+
+    @finalScore
 
 
 
